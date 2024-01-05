@@ -7,6 +7,9 @@
 
 [3. Technologies Used](#technologies-used)
 
+[4. What's Next](#whats-next)
+
+
 ## Introduction
 
 Hi, to anyone who is reading this, this is a project I made to make my life with Spotify easier. If you don't already know, I listen to a lot of Spotify and make a lot of playlists. Last year alone, I have listened to 94,000 minutes of Spotify which averages to around 4.3 hours per day. 
