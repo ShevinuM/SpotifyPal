@@ -1,10 +1,6 @@
 import os
-import sys
-import json
 import spotipy
-import webbrowser
 import spotipy.util as util
-from json.decoder import JSONDecodeError
 from colorama import Fore, Style
 from dotenv import load_dotenv
 from utils.smartSort import *
@@ -43,13 +39,20 @@ while True:
         print(Fore.RED + "\nThank you for using SpotifyPal\n")
         break
     elif choice == "1":
-        print(Fore.CYAN + "\n\nDo you want to update the playlists stored?\n")
-        print(Fore.GREEN + "\ty - Yes")
-        print(Fore.GREEN + "\tn - No")
+        while True:
+            print(Fore.CYAN + "\n\nDo you want to update the playlists stored?\n")
+            print(Fore.GREEN + "\ty - Yes")
+            print(Fore.GREEN + "\tn - No")
 
-        choice = input(Fore.YELLOW + "\nYour choice: ")
-        if choice == "y":
-            storePlaylists(spotifyObject, displayName)
-        smartSort(spotifyObject, displayName)
+            choice = input(Fore.YELLOW + "\nYour choice: ")
+            if choice == "y":
+                storePlaylists(spotifyObject, displayName)
+            elif choice != "n":
+                print(
+                    Fore.RED + "\n\tI didn't understand your choice, please try again"
+                )
+                continue
+            smartSort(spotifyObject, displayName)
+            break
     else:
         print(Fore.RED + "\n\tI didn't understand your choice, please try again\n")

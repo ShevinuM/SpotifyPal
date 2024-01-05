@@ -1,24 +1,21 @@
-import json
 from pymongo import MongoClient
-import sys
 from db_operations.storeTrackDetails import *
 from colorama import Fore, Style
 
+
 def smartSort(object, displayName):
-   
     # Establish connection to database
-    client = MongoClient('mongodb://localhost:27017')
-    db = client['SpotifyPal']
-    playlists_coll = db['Playlists']
+    client = MongoClient("mongodb://localhost:27017")
+    db = client["SpotifyPal"]
+    playlists_coll = db["Playlists"]
 
     playlists = {}
     i = 0
     for playlist in playlists_coll.find():
-        playlists[i] = [playlist['name'], playlist['id']]
+        playlists[i] = [playlist["name"], playlist["id"]]
         i += 1
-    
-    while True:
 
+    while True:
         print(Fore.CYAN + "\n\nWhich playlist would you like to sort?\n")
         for key, value in playlists.items():
             print(Fore.GREEN + f"\t{key} - {value[0]}")
@@ -26,28 +23,36 @@ def smartSort(object, displayName):
 
         choice = input(Fore.YELLOW + "Your choice: ")
 
-        if choice == 'q':
+        if choice == "q":
             break
         elif 0 <= int(choice) < len(playlists):
             playlist_id = playlists[int(choice)][1]
             # Find the playlist by id
-            playlist = playlists_coll.find_one({'id': playlist_id})
+            playlist = playlists_coll.find_one({"id": playlist_id})
             if playlist is not None:
-                tracks = playlist['tracks']
+                tracks = playlist["tracks"]
                 storeTrackDetails(object, tracks)
                 track1_map = {}
                 for track in tracks:
-                    track_name, track_id, track_index = track['name'], track['id'], track['track no']
-                    track_details = db['tracks'].find_one({'id': track_id})
+                    track_name, track_id, track_index = (
+                        track["name"],
+                        track["id"],
+                        track["track no"],
+                    )
+                    track_details = db["tracks"].find_one({"id": track_id})
                     track2_map = {}
                     for track2 in tracks:
-                        track2_name, track2_id, track2_index = track2['name'], track2['id'], track2['track no']
-                        track2_details = db['tracks'].find_one({'id': track2_id})
+                        track2_name, track2_id, track2_index = (
+                            track2["name"],
+                            track2["id"],
+                            track2["track no"],
+                        )
+                        track2_details = db["tracks"].find_one({"id": track2_id})
                         if track_id != track2_id:
                             score = getScore(track_details, track2_details)
                             track2_map[track2_id] = score
                     track1_map[track_id] = track2_map
-                
+
                 seq = generateSequence(track1_map, tracks)
 
                 object.playlist_replace_items(playlist_id, seq)
@@ -55,22 +60,22 @@ def smartSort(object, displayName):
             else:
                 print("Playlist not found in the database\n")
         else:
-            print("Invalid choice, please try again\n")
+            print(Fore.RED + "\n\tInvalid choice, please try again")
             continue
 
         print(Fore.CYAN + "\n\nWould you like to sort another playlist?\n")
         print(Fore.GREEN + "\ty - Yes")
         print(Fore.GREEN + "\tn - No\n")
         choice = input(Fore.YELLOW + "Your choice: ")
-        if choice == 'y':
+        if choice == "y":
             continue
         else:
             break
 
-    
+
 def getScore(td, t2d):
-    cc1 = getCamelotCode(td['key'], td['mode'])
-    cc2 = getCamelotCode(t2d['key'], t2d['mode'])
+    cc1 = getCamelotCode(td["key"], td["mode"])
+    cc2 = getCamelotCode(t2d["key"], t2d["mode"])
     d1, l1 = int(cc1[:-1]), cc1[-1]
     d2, l2 = int(cc2[:-1]), cc2[-1]
     score = 0
@@ -90,39 +95,65 @@ def getScore(td, t2d):
     else:
         score += ((num_dist - 0) / (11 - 0)) * (3 - 0)
         score += 1 if l1 == l2 else 0
-    
+
     # Acousticness
-    score += 1 - abs(td['acousticness'] - t2d['acousticness'])
+    score += 1 - abs(td["acousticness"] - t2d["acousticness"])
 
     # Danceability
-    score += 1 - abs(td['danceability'] - t2d['danceability'])
+    score += 1 - abs(td["danceability"] - t2d["danceability"])
 
     # Energy
-    score += 1 - abs(td['energy'] - t2d['energy'])
+    score += 1 - abs(td["energy"] - t2d["energy"])
 
     # Instrumentalness
-    score += 1 - abs(td['instrumentalness'] - t2d['instrumentalness'])
+    score += 1 - abs(td["instrumentalness"] - t2d["instrumentalness"])
 
     # Loudness
-    score += 1 - abs(td['loudness'] - t2d['loudness']) / 60
+    score += 1 - abs(td["loudness"] - t2d["loudness"]) / 60
 
     # Valence
-    score += 1 - abs(td['valence'] - t2d['valence'])
+    score += 1 - abs(td["valence"] - t2d["valence"])
 
     # Time Signature
-    score += (1 - abs(td['time_signature'] - t2d['time_signature']) / 4) * 2
+    score += (1 - abs(td["time_signature"] - t2d["time_signature"]) / 4) * 2
 
     # Tempo
-    score += 5 * (1 - abs(td['tempo'] - t2d['tempo']) / 300)
+    score += 5 * (1 - abs(td["tempo"] - t2d["tempo"]) / 300)
 
     return score
-    
+
 
 def getCamelotCode(key, mode):
     # Camelot Wheel mapping for Major (B) and Minor (A) keys
-    camelot_major = ['8B', '3B', '10B', '5B', '12B', '7B', '2B', '9B', '4B', '11B', '6B', '1B']
-    camelot_minor = ['5A', '12A', '7A', '2A', '9A', '4A', '11A', '6A', '1A', '8A', '3A', '10A']
-    
+    camelot_major = [
+        "8B",
+        "3B",
+        "10B",
+        "5B",
+        "12B",
+        "7B",
+        "2B",
+        "9B",
+        "4B",
+        "11B",
+        "6B",
+        "1B",
+    ]
+    camelot_minor = [
+        "5A",
+        "12A",
+        "7A",
+        "2A",
+        "9A",
+        "4A",
+        "11A",
+        "6A",
+        "1A",
+        "8A",
+        "3A",
+        "10A",
+    ]
+
     # Select the appropriate Camelot code based on mode
     if mode == 1:  # Major
         return camelot_major[key]
@@ -135,21 +166,21 @@ def generateSequence(map, tracks):
     res = []
     res_set = set()
     for i, track in enumerate(tracks):
-        name = track['name']
-        id = track['id']
+        name = track["name"]
+        id = track["id"]
         lst.append((i, name, id))
-    
+
     while True:
         print(Fore.CYAN + "\nWhich song would you like to start with?\n")
         for i, track in enumerate(lst):
             print(Fore.GREEN + f"\t{i} - {track[1]}")
-        
+
         choice = input(Fore.YELLOW + "\nYour choice: ")
         if 0 <= int(choice) < len(lst):
             start = lst[int(choice)][2]
-            res.append(f'spotify:track:{start}')
+            res.append(f"spotify:track:{start}")
             res_set.add(start)
-            for _ in range(len(lst)-1):
+            for _ in range(len(lst) - 1):
                 options = map[start]
                 max_score = -1
                 max_id = None
@@ -158,7 +189,7 @@ def generateSequence(map, tracks):
                         max_score = score
                         max_id = id
                 if max_id is not None:
-                    res.append(f'spotify:track:{max_id}')
+                    res.append(f"spotify:track:{max_id}")
                     res_set.add(max_id)
                     start = max_id
                 else:
