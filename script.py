@@ -43,9 +43,13 @@ while True:
         print(Fore.RED + "\nThank you for using SpotifyPal\n")
         break
     elif choice == "1":
-        
-        # storePlaylists(spotifyObject, displayName)
+        print(Fore.CYAN + "\n\nDo you want to update the playlists stored?\n")
+        print(Fore.GREEN + "\ty - Yes")
+        print(Fore.GREEN + "\tn - No")
+
+        choice = input(Fore.YELLOW + "\nYour choice: ")
+        if choice == "y":
+            storePlaylists(spotifyObject, displayName)
         smartSort(spotifyObject, displayName)
-        # print(json.dumps(spotifyObject.current_user_playlists(), sort_keys=True, indent=4))
     else:
         print(Fore.RED + "\n\tI didn't understand your choice, please try again\n")

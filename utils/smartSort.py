@@ -2,6 +2,7 @@ import json
 from pymongo import MongoClient
 import sys
 from db_operations.storeTrackDetails import *
+from colorama import Fore, Style
 
 def smartSort(object, displayName):
    
@@ -18,12 +19,12 @@ def smartSort(object, displayName):
     
     while True:
 
-        print("\n\nWhich playlist would you like to sort?\n")
+        print(Fore.CYAN + "\n\nWhich playlist would you like to sort?\n")
         for key, value in playlists.items():
-            print(f"\t{key} - {value[0]}")
-        print("\tq - Quit\n")
+            print(Fore.GREEN + f"\t{key} - {value[0]}")
+        print(Fore.GREEN + "\tq - Quit\n")
 
-        choice = input("Your choice: ")
+        choice = input(Fore.YELLOW + "Your choice: ")
 
         if choice == 'q':
             break
@@ -57,10 +58,10 @@ def smartSort(object, displayName):
             print("Invalid choice, please try again\n")
             continue
 
-        print("\n\nWould you like to sort another playlist?\n")
-        print("\ty - Yes")
-        print("\tn - No\n")
-        choice = input("Your choice: ")
+        print(Fore.CYAN + "\n\nWould you like to sort another playlist?\n")
+        print(Fore.GREEN + "\ty - Yes")
+        print(Fore.GREEN + "\tn - No\n")
+        choice = input(Fore.YELLOW + "Your choice: ")
         if choice == 'y':
             continue
         else:
@@ -139,14 +140,13 @@ def generateSequence(map, tracks):
         lst.append((i, name, id))
     
     while True:
-        print("\nWhich song would you like to start with?\n")
+        print(Fore.CYAN + "\nWhich song would you like to start with?\n")
         for i, track in enumerate(lst):
-            print(f"\t{i} - {track[1]}")
+            print(Fore.GREEN + f"\t{i} - {track[1]}")
         
-        choice = input("\nYour choice: ")
+        choice = input(Fore.YELLOW + "\nYour choice: ")
         if 0 <= int(choice) < len(lst):
             start = lst[int(choice)][2]
-            print(start)
             res.append(f'spotify:track:{start}')
             res_set.add(start)
             for _ in range(len(lst)-1):
