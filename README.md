@@ -1,9 +1,11 @@
 # SpotifyPal
 
 ## Table of Contents
-[1. Introduction](#Introduction)
+[1. Introduction](#introduction)
 
-[2. Installation](#Installation)
+[2. Installation](#installation)
+
+[3. Technologies Used](#technologies-used)
 
 ## Introduction
 
@@ -37,5 +39,38 @@ There were some features which I really wanted Spotify to provide but it didn't 
 
 1. Clone the repository
     ```bash
-    git clone 
+    git clone https://github.com/ShevinuM/SpotifyPal
     ```
+2. Make sure MongoDB is installed on your local machine. To install click [here](https://www.mongodb.com/docs/manual/installation/).
+3. Start a MongoDB server on port 27017.
+   ```bash
+   mongod --port 27017
+   ```
+4. Create an app on Spotify Developers Dashboard and copy .env.dist to .env, populate client id and client secret from [a Spotify app](https://developer.spotify.com/documentation/web-api/concepts/apps).
+5. Create a virtual environment.
+   ```bash
+   python3 -m venv env
+   ```
+6. Activate the virtual environment.
+    ```bash
+    source env/bin/activate
+    ```
+7. Install the required dependencies.
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+8. Open a terminal window at the folder and run the script.
+   ```bash
+   python3 script.py
+   ```
+
+
+## Technologies Used
+- **Language** : Python
+- **Database** : MongoDB
+- **External Libraries** : pyMongo, spotipy, tqdm, colorama, dotenv
+
+
+## What's Next
+- Completing the application with all the other features.
+- Extending the application to a web based version.
