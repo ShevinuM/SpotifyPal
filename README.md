@@ -47,19 +47,21 @@ There were some features which I really wanted Spotify to provide but it didn't 
    mongod --port 27017
    ```
 4. Create an app on Spotify Developers Dashboard and copy .env.dist to .env, populate client id and client secret from [a Spotify app](https://developer.spotify.com/documentation/web-api/concepts/apps).
-5. Create a virtual environment.
+5. Populate user id with your Spotify user id. Check [here](https://community.spotify.com/t5/FAQs/Can-t-remember-login-details-How-do-I-find-my-user-ID-and-the/ta-p/5182392) on how to get the User ID.
+6. Populate redirect uri to a link you want to be redirected to. I use ```http://localhost:4000```.
+7. Create a virtual environment.
    ```bash
    python3 -m venv env
    ```
-6. Activate the virtual environment.
+8. Activate the virtual environment.
     ```bash
     source env/bin/activate
     ```
-7. Install the required dependencies.
+9. Install the required dependencies.
    ```bash
    pip3 install -r requirements.txt
    ```
-8. Open a terminal window at the folder and run the script.
+10. Open a terminal window at the folder and run the script.
    ```bash
    python3 script.py
    ```
