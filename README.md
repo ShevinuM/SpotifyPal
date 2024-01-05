@@ -10,5 +10,6 @@ There were some features which I really wanted Spotify to provide but it didn't 
     - The purpose of this feature is to ensure smooth transitions between songs in a playlist. It takes multiple factors into account and gives a higher score to songs which are more likely to sound good together. To know more about the algorithm, check out the code [here](utils/smartSort.py).
     - I'm seeking feedback from anyone who is an audiophile to improve this further so if you have any suggestions, please let me know.
     - Here is a video of this in action
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/wpz8aKC1W-k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      
+       [![YouTube Video Link](http://img.youtube.com/vi/wpz8aKC1W-k/0.jpg)](https://www.youtube.com/watch?v=wpz8aKC1W-k)
  
