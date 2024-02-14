@@ -33,7 +33,7 @@ print(Fore.YELLOW + "\nHi " + displayName + "!\n")
 while True:
     print(Fore.CYAN + "\nWhat would you like to do?\n")
     print(Fore.GREEN + "\t1 - Smart sort my playlist")
-    print(Fore.BLUE + "\t2 - Filtre playlists by liked songs")
+    print(Fore.GREEN + "\t2 - Filtre playlists by liked songs")
     print(Fore.GREEN + "\t5 - Exit")
 
     choice = input(Fore.YELLOW + "\nYour choice: ")

@@ -17,7 +17,10 @@ def filtreLikedSongs(object):
     while True:
         print(Fore.CYAN + "\n\nWhich playlist would you like to filtre?\n")
         for key, value in playlists.items():
-            print(Fore.GREEN + f"\t{key} - {value[0]}")
+            if key == 0:
+                print(Fore.GREEN + f"\t{key} - {value[0]}")
+            else:
+                print(Fore.GREEN + f"\t{key} - <REDACTED>")
         print(Fore.GREEN + "\tq - Quit\n")
 
         choice = input(Fore.YELLOW + "Your choice: ")
@@ -42,7 +45,7 @@ def filtreLikedSongs(object):
             print(Fore.RED + "\n\tInvalid choice, please try again")
             continue
 
-        print(Fore.CYAN + "\n\nWould you like to filre another playlist?\n")
+        print(Fore.CYAN + "\n\nWould you like to filtre another playlist?\n")
         print(Fore.GREEN + "\ty - Yes")
         print(Fore.GREEN + "\tn - No\n")
         choice = input(Fore.YELLOW + "Your choice: ")
