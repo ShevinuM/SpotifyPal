@@ -73,6 +73,6 @@ while True:
                     )
                     continue
                 break
-            filtreLikedSongs(spotifyObject, displayName) 
+            filtreLikedSongs(spotifyObject) 
     else:
         print(Fore.RED + "\n\tI didn't understand your choice, please try again\n")

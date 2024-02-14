@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from tqdm import tqdm
 import sys
 
+
 def storeUserSavedTracks(object, displayName):
     # Establish connection to database
     client = MongoClient("mongodb://localhost:27017")
@@ -26,8 +27,8 @@ def storeUserSavedTracks(object, displayName):
                     "id": track["id"],
                     "artist": track["artists"][0]["name"],
                 }
-            ) 
+            )
         offset += 50
-    print(f"Processed {len(tracks_to_insert)} tracks.") 
+    print(f"Processed {len(tracks_to_insert)} tracks.")
     if tracks_to_insert:
         playlists_coll.insert_many(tracks_to_insert)
