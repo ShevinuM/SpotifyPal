@@ -57,22 +57,27 @@ while True:
                 continue
             break
         if choice == "1":
-            smartSort(spotifyObject, displayName)
+            smartSort(spotifyObject)
         elif choice == "2":
             while True:
-                print(Fore.CYAN + "\n\nDo you want to update the user saved tracks stored?\n")
+                print(
+                    Fore.CYAN
+                    + "\n\nDo you want to update the user saved tracks stored?\n"
+                )
                 print(Fore.GREEN + "\ty - Yes")
                 print(Fore.GREEN + "\tn - No")
 
                 choice2 = input(Fore.YELLOW + "\nYour choice: ")
                 if choice2 == "y":
-                    storeUserSavedTracks(spotifyObject, displayName)
+                    storeUserSavedTracks(spotifyObject)
                 elif choice2 != "n":
                     print(
-                        Fore.RED + "\n\tI didn't understand your choice, please try again"
+                        Fore.RED
+                        + "\n\tI didn't understand your choice, please try again"
                     )
                     continue
                 break
-            filtreLikedSongs(spotifyObject) 
+            filtreLikedSongs(spotifyObject)
+            smartSort(spotifyObject)
     else:
         print(Fore.RED + "\n\tI didn't understand your choice, please try again\n")

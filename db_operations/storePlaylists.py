@@ -45,3 +45,30 @@ def storePlaylists(object, displayName):
                     {"id": id, "name": playlist["name"], "tracks": tracksList}
                 )
         offset += 50
+
+
+def updateSpecificPlaylist(object, playlist_id):
+    client = MongoClient("mongodb://localhost:27017")
+    db = client["SpotifyPal"]
+    playlists_coll = db["Playlists"]
+
+    playlist = object.playlist(playlist_id)
+    tracksList = []
+    trackOffset = 0
+    while True:
+        tracks = object.playlist_tracks(playlist_id, limit=100, offset=trackOffset)
+        if not tracks["items"]:
+            break
+        for track in tracks["items"]:
+            tracksList.append(
+                {
+                    "name": track["track"]["name"],
+                    "id": track["track"]["id"],
+                    "track no": track["track"]["track_number"],
+                }
+            )
+        trackOffset += 100
+    playlists_coll.replace_one(
+        {"id": playlist_id},
+        {"id": playlist_id, "name": playlist["name"], "tracks": tracksList},
+    )

@@ -3,7 +3,7 @@ from db_operations.storeTrackDetails import *
 from colorama import Fore, Style
 
 
-def smartSort(object, displayName):
+def smartSort(object):
     # Establish connection to database
     client = MongoClient("mongodb://localhost:27017")
     db = client["SpotifyPal"]
@@ -27,38 +27,7 @@ def smartSort(object, displayName):
             break
         elif 0 <= int(choice) < len(playlists):
             playlist_id = playlists[int(choice)][1]
-            # Find the playlist by id
-            playlist = playlists_coll.find_one({"id": playlist_id})
-            if playlist is not None:
-                tracks = playlist["tracks"]
-                storeTrackDetails(object, tracks)
-                track1_map = {}
-                for track in tracks:
-                    track_name, track_id, track_index = (
-                        track["name"],
-                        track["id"],
-                        track["track no"],
-                    )
-                    track_details = db["tracks"].find_one({"id": track_id})
-                    track2_map = {}
-                    for track2 in tracks:
-                        track2_name, track2_id, track2_index = (
-                            track2["name"],
-                            track2["id"],
-                            track2["track no"],
-                        )
-                        track2_details = db["tracks"].find_one({"id": track2_id})
-                        if track_id != track2_id:
-                            score = getScore(track_details, track2_details)
-                            track2_map[track2_id] = score
-                    track1_map[track_id] = track2_map
-
-                seq = generateSequence(track1_map, tracks)
-
-                object.playlist_replace_items(playlist_id, seq)
-
-            else:
-                print("Playlist not found in the database\n")
+            executeSmartSortAlgorithm(object, playlist_id, playlists_coll, db)
         else:
             print(Fore.RED + "\n\tInvalid choice, please try again")
             continue
@@ -71,6 +40,41 @@ def smartSort(object, displayName):
             continue
         else:
             break
+
+
+def executeSmartSortAlgorithm(object, playlist_id, playlists_coll, db):
+    # Find the playlist by id
+    playlist = playlists_coll.find_one({"id": playlist_id})
+    if playlist is not None:
+        tracks = playlist["tracks"]
+        storeTrackDetails(object, tracks)
+        track1_map = {}
+        for track in tracks:
+            track_name, track_id, track_index = (
+                track["name"],
+                track["id"],
+                track["track no"],
+            )
+            track_details = db["tracks"].find_one({"id": track_id})
+            track2_map = {}
+            for track2 in tracks:
+                track2_name, track2_id, track2_index = (
+                    track2["name"],
+                    track2["id"],
+                    track2["track no"],
+                )
+                track2_details = db["tracks"].find_one({"id": track2_id})
+                if track_id != track2_id:
+                    score = getScore(track_details, track2_details)
+                    track2_map[track2_id] = score
+            track1_map[track_id] = track2_map
+
+        seq = generateSequence(track1_map, tracks)
+
+        object.playlist_replace_items(playlist_id, seq)
+
+    else:
+        print("Playlist not found in the database\n")
 
 
 def getScore(td, t2d):

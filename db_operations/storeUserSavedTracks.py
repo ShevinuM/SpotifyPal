@@ -3,7 +3,7 @@ from tqdm import tqdm
 import sys
 
 
-def storeUserSavedTracks(object, displayName):
+def storeUserSavedTracks(object):
     # Establish connection to database
     client = MongoClient("mongodb://localhost:27017")
     db = client["SpotifyPal"]
