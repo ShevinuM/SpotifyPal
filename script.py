@@ -4,6 +4,7 @@ import spotipy.util as util
 from colorama import Fore, Style
 from dotenv import load_dotenv
 from utils.smartSort import *
+from utils.generateMonthlyPlaylist import *
 from utils.filtreLikedSongs import *
 from db_operations.storePlaylists import *
 from db_operations.storeUserSavedTracks import *
@@ -34,6 +35,7 @@ while True:
     print(Fore.CYAN + "\nWhat would you like to do?\n")
     print(Fore.GREEN + "\t1 - Smart sort my playlist")
     print(Fore.GREEN + "\t2 - Filtre playlists by liked songs")
+    print(Fore.GREEN + "\t3 - Generate monthly playlist")
     print(Fore.GREEN + "\t5 - Exit")
 
     choice = input(Fore.YELLOW + "\nYour choice: ")
@@ -41,43 +43,16 @@ while True:
     if choice == "5":
         print(Fore.RED + "\nThank you for using SpotifyPal\n")
         break
-    elif choice == "1" or choice == "2":
-        while True:
-            print(Fore.CYAN + "\n\nDo you want to update the playlists stored?\n")
-            print(Fore.GREEN + "\ty - Yes")
-            print(Fore.GREEN + "\tn - No")
-
-            choice2 = input(Fore.YELLOW + "\nYour choice: ")
-            if choice2 == "y":
-                storePlaylists(spotifyObject, displayName)
-            elif choice2 != "n":
-                print(
-                    Fore.RED + "\n\tI didn't understand your choice, please try again"
-                )
-                continue
-            break
+    elif choice == "1" or choice == "2" or choice == "3":
+        updatePlaylists(spotifyObject, displayName)
         if choice == "1":
             smartSort(spotifyObject)
         elif choice == "2":
-            while True:
-                print(
-                    Fore.CYAN
-                    + "\n\nDo you want to update the user saved tracks stored?\n"
-                )
-                print(Fore.GREEN + "\ty - Yes")
-                print(Fore.GREEN + "\tn - No")
-
-                choice2 = input(Fore.YELLOW + "\nYour choice: ")
-                if choice2 == "y":
-                    storeUserSavedTracks(spotifyObject)
-                elif choice2 != "n":
-                    print(
-                        Fore.RED
-                        + "\n\tI didn't understand your choice, please try again"
-                    )
-                    continue
-                break
+            updateUserSavedTracks(spotifyObject)
             filtreLikedSongs(spotifyObject)
             smartSort(spotifyObject)
+        elif choice == "3":
+            updateUserSavedTracks(spotifyObject)
+            generateMonthlyPlaylist(spotifyObject)
     else:
         print(Fore.RED + "\n\tI didn't understand your choice, please try again\n")

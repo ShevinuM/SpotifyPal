@@ -4,7 +4,6 @@ from colorama import Fore, Style
 
 
 def smartSort(object):
-    # Establish connection to database
     client = MongoClient("mongodb://localhost:27017")
     db = client["SpotifyPal"]
     playlists_coll = db["Playlists"]
@@ -43,7 +42,6 @@ def smartSort(object):
 
 
 def executeSmartSortAlgorithm(object, playlist_id, playlists_coll, db):
-    # Find the playlist by id
     playlist = playlists_coll.find_one({"id": playlist_id})
     if playlist is not None:
         tracks = playlist["tracks"]
@@ -128,7 +126,6 @@ def getScore(td, t2d):
 
 
 def getCamelotCode(key, mode):
-    # Camelot Wheel mapping for Major (B) and Minor (A) keys
     camelot_major = [
         "8B",
         "3B",
@@ -158,7 +155,6 @@ def getCamelotCode(key, mode):
         "10A",
     ]
 
-    # Select the appropriate Camelot code based on mode
     if mode == 1:  # Major
         return camelot_major[key]
     else:  # Minor

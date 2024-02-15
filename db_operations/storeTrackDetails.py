@@ -1,4 +1,3 @@
-# Store track details for a given list of tracks
 from pymongo import MongoClient
 from tqdm import tqdm
 

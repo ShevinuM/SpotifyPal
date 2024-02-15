@@ -31,9 +31,13 @@ There were some features which I really wanted Spotify to provide but it didn't 
     - Spotify gives you tons of playlists but all of them have songs which you have not listened which you have no idea whether you will like it or not. This can be a good thing for discovering but for most of the time when you just want to listen to songs which you know you will like, this is annoying.
     - So I created a feature which will filter out any songs which isn't your saved tracks giving you a playlist of only the songs you have liked.
     - Here is a video of this in action
-        [![YouTube Video Link](http://img.youtube.com/vi/M3ZQkDe3dZQ/0.jpg)](https://www.youtube.com/watch?v=M3ZQkDe3dZQ)
+      [![YouTube Video Link](http://img.youtube.com/vi/M3ZQkDe3dZQ/0.jpg)](https://www.youtube.com/watch?v=M3ZQkDe3dZQ)
 
 3. Compile a playlist of all the songs you have liked during a certain period of time such as a monthly playlist or a yearly playlist.
+
+    - Monthly Playlist Generator has been succesfully implemented.
+    - Here is a video of this in action
+      [![YouTube Video Link](http://img.youtube.com/vi/E-6RAey2iCE/0.jpg)](https://www.youtube.com/watch?v=E-6RAey2iCE)
 
 4. Create a playlist of all the songs you have liked from a certain artist.
 
